@@ -84,10 +84,10 @@ inhollandtestNoAuth.addPolicy('simple-header-policy', {
 inhollandtestNoAuth.publish()
 
 #Create SAML Identity Broker
-keycloak.getIdentityProvider().createSamlIdentityProvider('SURFconext', False, 'https://engine.connect.surfconext.nl/authentication/idp/single-sign-on','urn:oasis:names:tc:SAML:2.0:nameid-format:persistent')
+keycloak.getIdentityProvider().createSamlIdentityProvider('SurfConext', False, 'https://engine.connect.surfconext.nl/authentication/idp/single-sign-on','urn:oasis:names:tc:SAML:2.0:nameid-format:persistent')
 
 #Map SAML Attributes onto Keycloak Attributes
-mapper = keycloak.getIdentityProviderMapper('SURFconext')
+mapper = keycloak.getIdentityProviderMapper('SurfConext')
 mapper.createSamlAttributeImporterMapper('mail', 'urn:mace:dir:attribute-def:mail', None, 'mail')
 mapper.createSamlAttributeImporterMapper('eduPersonPrincipalName', 'urn:mace:dir:attribute-def:eduPersonPrincipalName', None, 'eduPersonPrincipalName')
 mapper.createSamlAttributeImporterMapper('uid', 'urn:oid:0.9.2342.19200300.100.1.1', None, 'uid')
