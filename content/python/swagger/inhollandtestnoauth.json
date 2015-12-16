@@ -1,0 +1,29 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "InHolland - OOAPI",
+        "description": "InHolland - Open Onderwijs API secured by SURFconext",
+        "version": "1.0.0"
+    },
+    "host": "apiman.openonderwijs.nl:8080",
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/apiman-gateway/SURFnet/InHollandTestNoAuth/1.0",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Open Onderwijs API",
+                "description": "Entrypoint for the Open Onderwijs API for In Holland.\n",
+                "responses": {
+                    "200": {
+                        "description": "Open Onderwijs API response depends on context call."
+                    }
+                }
+            }
+        }
+    }
+}

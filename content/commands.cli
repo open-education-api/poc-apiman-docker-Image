@@ -1,0 +1,10 @@
+# Add System properties for SP SSO Descriptor
+/system-property=spssodescriptor.username:add(value=admin)
+/system-property=spssodescriptor.password:add(value=$ADMIN_PASSWORD)
+/system-property=spssodescriptor.baseUrl:add(value=$BASE_URL)
+
+# Add SP SSO Descriptor WAR
+deploy /opt/jboss/provision/deployments/keycloak-saml-spssodescriptor-1.0.0-SNAPSHOT.war
+
+# Add the Javascript Console
+deploy /opt/jboss/provision/deployments/js-console.war
