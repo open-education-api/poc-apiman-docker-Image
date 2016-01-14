@@ -39,7 +39,7 @@ Use https://<host>:8443/js-console/ to open the demo application. See the *SURFn
 Use https://<host>:8443/spssodescriptor/realms/{realm}/identity-provider/{identity-provider} to retrieve the SAML SP SSO Descriptor of an identity provider within a realm. See the *SAML - Service Provider SSO Descriptor Proxy*  project for further details.
 
 ### Replace the preloaded keystore 
-Create a keystore with ***secret*** as the keystore / private key passowrd.
+Create a keystore with ***secret*** as the keystore / private key passowrd and an alias ***apimancert***
 
 Start the docker container as follows assuming your keystore is located in /my-keystore.jks:
 `docker run -d -p 8443:8443 -v /my-keystore.jks:/opt/jboss/wildfly/standalone/configuration/apiman.jks docker-registry.finalist.nl:5000/surfnet/ooapi-poc:1.0`

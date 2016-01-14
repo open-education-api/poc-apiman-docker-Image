@@ -39,9 +39,8 @@ certificate = keycloak.getRealm().getCertificate()
 #Create new organization and assign users to it
 org = apiman.Organization(admin, 'SURFnet','SURFnet')
 
-inhollandtest = org.createService('InHollandTest','In Holland - Test - Open Onderwijs Api Service', '1.0')
+inhollandtest = org.createService('InHollandPrivate','In Holland - Open Onderwijs Api Service - Afgeschermde, gebruiker specifieke, API\'s', '1.0')
 inhollandtest.configureEndpoint('rest','https://inhollandtest.azure-api.net/',True)
-inhollandtest.enableBasicAuthentication('demo','d3m0')
 inhollandtest.setSwaggerJsonDefinition(curDir+'/swagger/inhollandtest.json')
 inhollandtest.addPolicy('keycloak-oauth-policy', { 
     'realm' : external_url + '/auth/realms/apiman', 
@@ -62,24 +61,14 @@ inhollandtest.addPolicy('simple-header-policy', {
 
 inhollandtest.publish()
 
-inhollandtestNoAuth = org.createService('InHollandTestNoAuth','In Holland - Test without authentication - Open Onderwijs Api Service', '1.0')
+inhollandtestNoAuth = org.createService('InHollandPublic','In Holland - Open Onderwijs Api Service - Publieke API\'s', '1.0')
 inhollandtestNoAuth.configureEndpoint('rest','https://inhollandtest.azure-api.net/',True)
 inhollandtestNoAuth.setSwaggerJsonDefinition(curDir+'/swagger/inhollandtestnoauth.json')
-#Subscription key for connecting to the Azure Starter Subscription
-inhollandtestNoAuth.addPolicy('keycloak-oauth-policy', { 
-    'realm' : external_url + '/auth/realms/apiman', 
-    'realmCertificateString' : certificate, 
-    'stripTokens' : True,
-    'delegateKerberosTicket' : False,
-    'forwardRoles' : { 'active' : False },
-    'forwardAuthInfo' : [{
-        'field' : 'username', 
-        'headers' : 'userid'}]})
 inhollandtestNoAuth.addPolicy('simple-header-policy', {
     'addHeaders': [{ 
         'applyTo' : 'Request', 
         'headerName' : 'Ocp-Apim-Subscription-Key', 
-        'headerValue' : '97dcf5d9e8a444a4a421fb5856a6c49a', 
+        'headerValue' : 'f797be1840d144b9a9851a9f3cfea591', 
         'valueType' : 'String'}]})
 inhollandtestNoAuth.publish()
 

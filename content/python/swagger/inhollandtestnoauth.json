@@ -9,14 +9,14 @@
     "schemes": [
         "https"
     ],
-    "basePath": "/apiman-gateway/SURFnet/InHollandTestNoAuth/1.0",
+    "basePath": "/apiman-gateway/SURFnet/InHollandPublic/1.0",
     "produces": [
         "application/json"
     ],
     "paths": {
         "/": {
             "get": {
-                "summary": "Open Onderwijs API",
+                "summary": "Open Onderwijs API - Publieke API's",
                 "description": "Entrypoint for the Open Onderwijs API for In Holland.\n",
                 "responses": {
                     "200": {
