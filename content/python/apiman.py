@@ -115,6 +115,10 @@ class VersionedEntity(Entity):
     def get(self):
         return self.client.get(self.url)
 
+    def addPolicyNoConfig(self, definitionId):
+        payload = { 'definitionId' : definitionId }
+        self.client.post(self.policyUrl, payload)
+        
     def addPolicy(self, definitionId, configuration):
         payload = { 'definitionId' : definitionId , 'configuration' : json.JSONEncoder().encode(configuration)}
         self.client.post(self.policyUrl, payload)

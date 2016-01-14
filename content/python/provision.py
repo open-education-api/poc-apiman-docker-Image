@@ -32,6 +32,7 @@ admin = apiman.ApiMan(baseUrl, realm, token)
 version = admin.getVersion()
 admin.installPlugin('io.apiman.plugins', 'apiman-plugins-keycloak-oauth-policy', version)
 admin.installPlugin('io.apiman.plugins', 'apiman-plugins-simple-header-policy', version)
+admin.installPlugin('io.apiman.plugins', 'apiman-plugins-log-policy', version)
 
 #Get the certificate from the Apiman realm in Keycloak.
 certificate = keycloak.getRealm().getCertificate()
@@ -58,7 +59,8 @@ inhollandtest.addPolicy('simple-header-policy', {
         'headerName' : 'Ocp-Apim-Subscription-Key', 
         'headerValue' : 'f797be1840d144b9a9851a9f3cfea591', 
         'valueType' : 'String'}]})
-
+#Log the HTTP request headers just before we are going the backend
+inhollandtest.addPolicyNoConfig('log-headers-policy')
 inhollandtest.publish()
 
 inhollandtestNoAuth = org.createService('InHollandPublic','In Holland - Open Onderwijs Api Service - Publieke API\'s', '1.0')
