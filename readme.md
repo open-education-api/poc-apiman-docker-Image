@@ -6,10 +6,12 @@ This project builds a Docker image containing a provisioned and runnning install
 
 ## Build Image
 The Docker image must be build before you can use it:  
-`./build.sh <admin-password>`
+`./build.sh [admin-password]`
+
+Supplying an admin-password is optional. The default is **admin123!**.
 
 For example:
-`./build.sh admin123!`
+`./build.sh admin123!` or `./build.sh`
 
 ## Usage
 Use the Docker Scripts from the **SURFnet - Open Onderwijs API - Docker scripts** project or use the docker commands directly. 
@@ -32,7 +34,7 @@ The master realm of JBoss Keycloak is configured with the default user **admin**
 
 Use https://<host>:8443/auth/admin/ to login to the JBoss Keycloak admin console and change the default password!
 
-The apiman realm of JBoss Keycloak is configured with the default user **admin** and the password that you supplied during using the <admin-password> parameter.  
+The apiman realm of JBoss Keycloak is configured with the default user **admin** and the password that you supplied during the build using the [admin-password] parameter or defaults to **admin123!**. 
  
 Use https://<host>:8443/apimanui/ to login to JBoss Apiman.
 
