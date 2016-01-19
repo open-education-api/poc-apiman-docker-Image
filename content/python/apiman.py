@@ -24,11 +24,11 @@ class ApiMan(object):
         payload = {'permissions' : permissions}
         self.client.put('/apiman/roles/' + name, payload)
         
-    def searchServices(self, searchCriteria, onSuccess = lambda x:x.json()):
-        return self.client.post('/apiman/search/services',searchCriteria, onSuccess)
+    def searchApis(self, searchCriteria, onSuccess = lambda x:x.json()):
+        return self.client.post('/apiman/search/apis',searchCriteria, onSuccess)
 
-    def searchApplications(self, searchCriteria, onSuccess = lambda x:x.json()):
-        return self.client.post('/apiman/search/applications',searchCriteria, onSuccess)
+    def searchClients(self, searchCriteria, onSuccess = lambda x:x.json()):
+        return self.client.post('/apiman/search/clients',searchCriteria, onSuccess)
 
     def searchOrganizations(self, searchCriteria, onSuccess = lambda x:x.json()):
         return self.client.post('/apiman/search/organizations',searchCriteria, onSuccess)
@@ -69,11 +69,11 @@ class ApiMan(object):
                 policyDefId = policyDef['id']
                 pp.pprint(self.getPolicyDefinitionForm(pluginId,policyDefId))
                 
-    def printServicePolicyConfiguration(self, organizationId, serviceId, versionId):
+    def printApiPolicyConfiguration(self, organizationId, apiId, versionId):
         pp = pprint.PrettyPrinter(indent=4)        
-        policies = self.client.get('/apiman/organizations/{}/services/{}/versions/{}/policies/'.format(organizationId,serviceId,versionId))
+        policies = self.client.get('/apiman/organizations/{}/services/{}/versions/{}/policies/'.format(organizationId,apiId,versionId))
         for policy in policies:
-            fullPolicy = self.client.get('/apiman/organizations/{}/services/{}/versions/{}/policies/{}'.format(organizationId,serviceId,versionId,policy['id']))
+            fullPolicy = self.client.get('/apiman/organizations/{}/services/{}/versions/{}/policies/{}'.format(organizationId,apiId,versionId,policy['id']))
             pp.pprint(fullPolicy)
         
 class Entity(object):
@@ -141,23 +141,23 @@ class Organization(Entity):
     def createPlan(self, plan, description, version):
         return Plan(self,plan,description,version)
         
-    def createService(self, service, description, version):
-        return Service(self,service, description, version)
+    def createApi(self, api, description, version):
+        return Api(self,api, description, version)
         
-    def createApplication(self, application, description, version):
-        return Application(self, application, description, version)
+    def createClient(self, client, description, version):
+        return Client(self, client, description, version)
 
 class Plan(VersionedEntity):
     def __init__(self, organization, plan, description, version):
         super(Plan,self).__init__(organization,plan,description,version,'plans','lockPlan')
 
-class Service(VersionedEntity):
+class Api(VersionedEntity):
 
-    def __init__(self, organization, serviceId, description, version):
-        super(Service,self).__init__(organization,serviceId,description,version,'services','publishService')
+    def __init__(self, organization, apiId, description, version):
+        super(Api,self).__init__(organization,apiId,description,version,'apis','publishAPI')
 
-    def configureEndpoint(self, endpointType, endpoint, publicService):
-        payload = { 'endpointType' : endpointType, 'publicService' : publicService , 'endpoint' : endpoint}
+    def configureEndpoint(self, endpointType, endpoint, publicApi):
+        payload = { 'endpointType' : endpointType, 'publicAPI' : publicApi , 'endpoint' : endpoint}
         self.client.put(self.url, payload)
     
     def setSwaggerJsonDefinition(self, file):
@@ -172,12 +172,12 @@ class Service(VersionedEntity):
         payload = { 'plans' : map(lambda x: {'planId' : x.entityId , 'version' : x.version} ,plans)}
         self.client.put(self.url, payload)
         
-class Application(VersionedEntity):
+class Client(VersionedEntity):
     
-    def __init__(self, organization, application, description, version):
-        super(Application,self).__init__(organization,application,description,version,'applications','registerApplication')
-        self.contractUrl = '{}/{}/versions/{}/contracts'.format(self.baseUrl,application,version)
+    def __init__(self, organization, client, description, version):
+        super(Client,self).__init__(organization,client,description,version,'clients','registerClient')
+        self.contractUrl = '{}/{}/versions/{}/contracts'.format(self.baseUrl,client,version)
         
     def createContract(self, service, plan):
-        payload = {'serviceId' : service.entityId, 'planId' : plan.entityId, 'serviceVersion' : service.version, 'serviceOrgId' : self.organizationId}
+        payload = {'apiId' : service.entityId, 'planId' : plan.entityId, 'apiVersion' : service.version, 'organizationId' : self.organizationId}
         self.client.post(self.contractUrl, payload)

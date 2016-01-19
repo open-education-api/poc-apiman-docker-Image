@@ -1,4 +1,4 @@
-FROM jboss/apiman-wildfly:1.1.9.Final
+FROM finalist/apiman-wildfly:1.2.0.Final
 
 MAINTAINER Ton Swieb <ton@finalist.nl>
 
