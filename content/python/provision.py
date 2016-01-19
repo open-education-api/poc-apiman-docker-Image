@@ -13,9 +13,6 @@ import os
 # so using http://localhost:8080 is the most stable solution
 baseUrl = os.getenv('BASE_URL','http://localhost:8080')
 
-# Should be factored out as soon as https://issues.jboss.org/browse/APIMAN-831 is resolved
-external_url = os.getenv('EXTERNAL_URL', 'https://apiman.openonderwijsapi.nl:7443')
-
 realm = 'apiman'
 secret = 'password'
 
@@ -48,7 +45,7 @@ inhollandtest.addPolicy('keycloak-oauth-policy', {
     'requireTransportSecurity' : True,
     'blacklistUnsafeTokens' : True,
     'stripTokens' : True,
-    'realm' : external_url + '/auth/realms/apiman', 
+    'realm' : '${realm_base_url}/auth/realms/apiman', 
     'realmCertificateString' : certificate,
     'forwardRoles' : { 'active' : False },
     'delegateKerberosTicket' : False,
