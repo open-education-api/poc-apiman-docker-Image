@@ -12,8 +12,7 @@ USER jboss
 #Set the local URL to use for accessing JBoss Apiman via REST DSL for provisioning
 ENV BASE_URL http://127.0.0.1:8080
 
-# TODO: Find a way to remove this from the Docker build and move it to the runtime
-ARG ADMIN_PASSWORD
+ARG ADMIN_PASSWORD=admin123!
 
 #Copy the content required for provisioning
 COPY content /opt/jboss/provision/

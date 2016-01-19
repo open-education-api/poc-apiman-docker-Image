@@ -12,21 +12,18 @@ DOCKER_IMAGE_VERSION=1.0
 
 display_usage() {
 	echo "Builds the Docker image $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION" 
-	echo "\nUsage:\n$0 admin-password external-url \n" 
-	echo "admin-password: The password to set for the admin user"
+	echo "\nUsage:\n$0 [admin-password] \n" 
+	echo "admin-password: The password to set for the admin user. Defaults to admin123!"
 	} 
 
-if [  $# -le 0 ]; then 
+if [ $# -le 0 ]; then 
+	docker rmi --force=true $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION
+	docker build --pull=true --force-rm=true --rm=true -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION $(dirname $0)
+elif [ $# -le 1 ]; then
+	docker rmi --force=true $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION
+	docker build --pull=true --force-rm=true --rm=true --build-arg ADMIN_PASSWORD=$1 -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION $(dirname $0)
+else
 	display_usage
 	exit 1
 fi 
 
-docker rmi --force=true $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION
-docker build --pull=true --force-rm=true --rm=true --build-arg ADMIN_PASSWORD=$1 -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION $(dirname $0)
-
-if [ "$1" = "push" ]; then
-	docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION
-fi
-
-
-                                                                                                                
