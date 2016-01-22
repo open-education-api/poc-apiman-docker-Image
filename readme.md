@@ -6,10 +6,6 @@ This project builds a Docker image containing a provisioned and runnning install
 
 
 ## Usage
-Use the Docker Scripts from the **SURFnet - Open Onderwijs API - Docker scripts** project or use the docker commands directly. 
-
-For example.
-
 To run the docker container in interactive mode with HTTP (8080), HTTPS (8443) and management HTTP (9990) enabled on the environment https://apiman.openonderwijsapi.nl at port 7443:  
 
 `docker run -ti -p 8080:8080 -p 8443:8443 -p 9990:9990 surfnet/ooapi-apiman -Drealm_base_url=https://apiman.openonderwijsapi.nl:7443`
