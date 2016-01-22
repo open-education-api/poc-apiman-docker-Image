@@ -9,16 +9,14 @@ RUN yum -y install python-pip && yum clean all
 RUN pip install requests
 USER jboss
 
-#Set the local URL to use for accessing JBoss Apiman via REST DSL for provisioning
-ENV BASE_URL http://127.0.0.1:8080
-
-ARG ADMIN_PASSWORD=admin123!
+ENV BASE_URL=http://127.0.0.1:8080 ADMIN_PASSWORD=admin123!
 
 #Copy the content required for provisioning
 COPY content /opt/jboss/provision/
 
 #Execute the provision script
-RUN /opt/jboss/provision/provision.sh
+#Supply some environment variables which are only needed during provisioning.
+RUN BASE_URL=http://127.0.0.1:8080 ADMIN_PASSWORD=admin123! /opt/jboss/provision/provision.sh
 
 # Enable the management console for development purposes.
 # Disable in production by commenting the line below!
