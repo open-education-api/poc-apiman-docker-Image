@@ -1,4 +1,4 @@
-FROM finalist/apiman-wildfly:1.2.0.Final
+FROM finalist/apiman-wildfly:1.2.1.Final
 
 MAINTAINER Ton Swieb <ton@finalist.nl>
 
