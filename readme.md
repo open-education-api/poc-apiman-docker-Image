@@ -8,11 +8,11 @@ This project builds a Docker image containing a provisioned and runnning install
 ## Usage
 To run the docker container in interactive mode with HTTP (8080), HTTPS (8443) and management HTTP (9990) enabled on the environment https://apiman.openonderwijsapi.nl at port 8443:  
 
-`docker run -ti -p 8080:8080 -p 8443:8443 -p 9990:9990 surfnet/ooapi-apiman -Drealm_base_url=https://apiman.openonderwijsapi.nl:8443`
+`docker run -ti -p 8080:8080 -p 8443:8443 -p 9990:9990 surfnet/ooapi-apiman:1.0 -Drealm_base_url=https://apiman.openonderwijsapi.nl:8443`
 
 To run the docker container as a deamon with only HTTPS (8443) enabled on the environment https://apiman.openonderwijsapi.nl at port 8443:
 
-`docker run -d -p 8443:8443 surfnet/ooapi-apiman -Drealm_base_url=https://apiman.openonderwijsapi.nl:8443`
+`docker run -d -p 8443:8443 surfnet/ooapi-apiman:1.0 -Drealm_base_url=https://apiman.openonderwijsapi.nl:8443`
 
 The base url of the realm protecting the API must be supplied using the **realm_base_url** system property. A correctly configured realm base url is required to prevent verification issues with the OAuth token.
 
@@ -34,7 +34,7 @@ Use https://host:8443/spssodescriptor/realms/{realm}/identity-provider/{identity
 Create a keystore with ***secret*** as the keystore / private key passowrd and an alias ***apimancert***
 
 Start the docker container as follows assuming your keystore is located in /my-keystore.jks:
-`docker run -d -p 8443:8443 -v /my-keystore.jks:/opt/jboss/wildfly/standalone/configuration/apiman.jks surfnet/ooapi-apiman -Dexternal_url=https://apiman.openonderwijsapi.nl:8443`
+`docker run -d -p 8443:8443 -v /my-keystore.jks:/opt/jboss/wildfly/standalone/configuration/apiman.jks surfnet/ooapi-apiman:1.0 -Dexternal_url=https://apiman.openonderwijsapi.nl:8443`
 
 
 ## Limitations
