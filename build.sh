@@ -1,33 +1,11 @@
 #!/bin/sh
 #
-# Using a build script, because the Docker plugin does not work!
 # Alway pull-in the latest parent so we are up to date with latest patch releases
 #
-# Usage: ./build.sh [push]
+# Usage: ./build.sh
 #
-# The [push] option should only be used for Jenkins builds and not local builds.
-#
-DOCKER_IMAGE_NAME=docker-registry.finalist.nl:5000/surfnet/ooapi-poc
-DOCKER_IMAGE_VERSION=1.0
-
-display_usage() { 
-	echo "Builds the Docker image $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION" 
-	echo "\nUsage:\n$0 admin-password external-url \n" 
-	echo "admin-password: The password to set for the admin user"
-	echo "external-url: The base URL on which the Docker Container will be accessible, e.g. https://apiman.openonderwijsapi.nl:7443"
-	} 
-
-if [  $# -le 1 ]; then 
-	display_usage
-	exit 1
-fi 
+DOCKER_IMAGE_NAME=surfnet/ooapi-apiman
+DOCKER_IMAGE_VERSION=latest
 
 docker rmi --force=true $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION
-docker build --pull=true --force-rm=true --rm=true --build-arg ADMIN_PASSWORD=$1 --build-arg EXTERNAL_URL=$2 -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION $(dirname $0)
-
-if [ "$1" = "push" ]; then
-	docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION
-fi
-
-
-                                                                                                                
+docker build --pull=true --force-rm=true --rm=true -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_VERSION $(dirname $0)

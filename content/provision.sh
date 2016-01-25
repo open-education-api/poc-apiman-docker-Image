@@ -19,10 +19,6 @@ function start_wildfly() {
 	$JBOSS_HOME/bin/standalone.sh -c standalone-apiman.xml &
 }
 
-#Setup the .M2 repo which points to a local repo with custom Apiman plugins
-mkdir .m2
-cp -R provision/m2/* .m2/
-
 #echo "=> Change the default keystore before we boot"
 #sed -i 's|apiman.jks|apiman-openonderwijsapi-nl.jks|' /opt/wildfly/standalone/configuration/standalone-apiman.xml
 
